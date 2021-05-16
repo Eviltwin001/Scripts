@@ -21,13 +21,13 @@ while wait() do
     for i,v in pairs(workspace.Bananas:GetChildren()) do
         	if v:IsA("MeshPart") and v.Transparency ~= 1 then
         	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
-        	wait(1.7)
+        	wait(2)
              end
          end
      end
 end)
 
-wait(15)
+wait(30)
 local x = {}
 	for _, v in ipairs(game:GetService("HttpService"):JSONDecode(game:HttpGetAsync("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100")).data) do
 		if type(v) == "table" and v.maxPlayers > v.playing and v.id ~= game.JobId then
@@ -39,3 +39,5 @@ local x = {}
 	else
 		return notify("Serverhop","Couldn't find a server.")
 	end
+
+
