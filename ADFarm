@@ -32,32 +32,20 @@ game.RunService.Stepped:Connect(function()
     end
 end)
 
-if getgenv().AutoSkills == true then 
-    spawn(function()
-        while wait() do 
+spawn(function()
+    while wait() do
+        if AutoSkills then
             game:GetService("VirtualInputManager"):SendKeyEvent(true, 49, false, game)
             game:GetService("VirtualInputManager"):SendKeyEvent(false, 49, false, game)
-        end 
-    end)
-
-    spawn(function()
-        while wait() do 
+            wait()
             game:GetService("VirtualInputManager"):SendKeyEvent(true, 50, false, game)
             game:GetService("VirtualInputManager"):SendKeyEvent(false, 50, false, game)
-        end 
-    end)
-
-    spawn(function()
-        while wait() do 
+            wait()
             game:GetService("VirtualInputManager"):SendKeyEvent(true, 51, false, game)
             game:GetService("VirtualInputManager"):SendKeyEvent(false, 51, false, game)
-        end 
-    end)
-
-    spawn(function()
-        while wait() do 
+            wait()
             game:GetService("VirtualInputManager"):SendKeyEvent(true, 52, false, game)
             game:GetService("VirtualInputManager"):SendKeyEvent(false, 52, false, game)
-        end 
-    end)
-end 
+        end
+    end
+end)
