@@ -49,3 +49,15 @@ spawn(function()
         end
     end
 end)
+
+spawn(function()
+    if AutoRetry then 
+        while wait() do 
+            local args = {
+            [1] = "RetryDungeon"
+                         }
+
+            game:GetService("ReplicatedStorage").RemoteEvents.MainRemoteEvent:FireServer(unpack(args))
+        end
+     end
+ end)
