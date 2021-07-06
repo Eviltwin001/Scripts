@@ -1,0 +1,63 @@
+getgenv().autofarm = true
+speed = 100
+Distance = 2
+function tween(target)
+    local target = pcall(function() return target.CFrame end) and target.CFrame or target
+    game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(game.Players.LocalPlayer:DistanceFromCharacter(target.Position)/speed, Enum.EasingStyle.Linear), {CFrame = target*CFrame.new(0,0,Distance)}):Play()
+    wait(game.Players.LocalPlayer:DistanceFromCharacter(target.Position)/speed)
+end
+
+spawn(function()
+    while wait() do
+        if autofarm then
+            for i,v in pairs(workspace.Folders.Monsters:GetChildren()) do
+                if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChildOfClass("Humanoid") and v:FindFirstChildOfClass("Humanoid").Health > 0 then
+                    pcall(function()
+                        repeat
+                            wait()
+                            tween(v.HumanoidRootPart.CFrame)
+                            for i = 1,4 do
+                                game:GetService("ReplicatedStorage").RemoteEvents.MainRemoteEvent:FireServer("UseSkill", {["hrpCFrame"] = v.HumanoidRootPart.CFrame,["attackNumber"] = i}, "BasicAttack")
+                            end
+                        until not v or not v:IsDescendantOf(workspace.Folders) or v:FindFirstChildOfClass("Humanoid").Health == 0
+                    end)
+                end
+            end
+        end
+    end
+end)
+game.RunService.Stepped:Connect(function()
+    if autofarm then
+        game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+    end
+end)
+
+if getgenv().AutoSkills = true then 
+    spawn(function()
+        while wait() do 
+            game:GetService("VirtualInputManager"):SendKeyEvent(true, 49, false, game)
+            game:GetService("VirtualInputManager"):SendKeyEvent(false, 49, false, game)
+        end 
+    end)
+
+    spawn(function()
+        while wait() do 
+            game:GetService("VirtualInputManager"):SendKeyEvent(true, 50, false, game)
+            game:GetService("VirtualInputManager"):SendKeyEvent(false, 50, false, game)
+        end 
+    end)
+
+    spawn(function()
+        while wait() do 
+            game:GetService("VirtualInputManager"):SendKeyEvent(true, 51, false, game)
+            game:GetService("VirtualInputManager"):SendKeyEvent(false, 51, false, game)
+        end 
+    end)
+
+    spawn(function()
+        while wait() do 
+            game:GetService("VirtualInputManager"):SendKeyEvent(true, 52, false, game)
+            game:GetService("VirtualInputManager"):SendKeyEvent(false, 52, false, game)
+        end 
+    end)
+end 
