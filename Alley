@@ -1,0 +1,101 @@
+repeat task.wait() until game:IsLoaded()
+
+
+local Library1 = require(game:GetService("ReplicatedStorage").Library)
+local Audio = require(game:GetService("ReplicatedStorage").Library.Audio)
+local TeleportMod = getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Teleport)
+local Library = require(game:GetService("ReplicatedStorage").Library.Client.Network)
+local InvokeHook = hookfunction(debug.getupvalue(Library.Invoke, 1), function(...) return true end)
+local TeleportService = game:GetService("TeleportService")
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players");
+local Player = Players.LocalPlayer; 
+local Chr = Player.Character; 
+local Root = Chr.HumanoidRootPart; 
+local Audio = require(game:GetService("ReplicatedStorage").Library.Audio)
+local FakeAudio = Instance.new("Sound", Workspace)
+FakeAudio.Name = "Fake"
+
+hookfunction(Audio.Play, function()
+    return FakeAudio
+end)
+
+
+local Lib = require(game:GetService("ReplicatedStorage").Framework.Library);
+local Save = Lib.Save.Get();
+local Pets = Save.Pets; 
+
+
+if Save.World ~= "Kawaii" then TeleportMod.Teleport("Kawaii Tokyo") end 
+repeat task.wait() until Lib.WorldCmds.HasLoaded() == true 
+
+-- Auto Orb / Lootbag
+Workspace["__THINGS"].Orbs.ChildAdded:Connect(function(Child)
+    Library.Fire("Claim Orbs", {Child.Name})
+    Child:Destroy()
+    task.wait()
+end)
+ 
+Workspace["__THINGS"].Lootbags.ChildAdded:Connect(function(Child)
+    Library.Fire("Collect Lootbag", Child.Name, Child.CFrame.p)
+    Child:Destroy()
+    task.wait()
+end)
+
+local function GetAlleyChest()
+    for Alley = 1,4 do 
+        for Order = 1,3 do 
+            for i,v in next, Library.Invoke("Kawaii Alley: Get Data")["Chests"] do 
+                if v.Alley == Alley and v.Order == Order then 
+                    if Library.Invoke("Get Coins")[tostring(i)] ~= nil then 
+                        return i
+                    end
+                end 
+            end 
+        end 
+    end 
+end 
+
+local function EggCheck()
+    for _,v in next, game:GetService("Workspace")["__MAP"].Eggs:GetChildren() do 
+        if string.find(v.Name, "Alley") then 
+            if v.Eggs["Egg Capsule"].Egg.Transparency == 0 then 
+                return v.Eggs["Egg Capsule"].Egg.CFrame
+            end 
+        end 
+    end 
+
+    return false
+end 
+
+local function GetEquippedP()
+    local PetsT = {}
+    
+    for _,v in next, Lib.PetCmds.GetEquipped() do
+        table.insert(PetsT, v.uid)
+    end 
+
+    return PetsT
+end 
+
+local function FarmChest(Chest)
+    local TempPetsTable = GetEquippedP()
+
+    repeat task.wait(1)
+
+    Library.Invoke("Join Coin", Chest, TempPetsTable)
+
+    for _,pet in next, TempPetsTable do 
+        Library.Fire("Farm Coin", Chest, pet)
+    end 
+
+    until Library.Invoke("Get Coins")[tostring(Chest)] == nil
+end 
+
+while task.wait(1) do 
+    if EggCheck() == false then 
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Workspace["__THINGS"].Coins[tostring(GetAlleyChest())].POS.CFrame
+        
+        FarmChest(GetAlleyChest())
+    end 
+end 
