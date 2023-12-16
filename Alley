@@ -20,14 +20,19 @@ hookfunction(Audio.Play, function()
     return FakeAudio
 end)
 
+print("1")
+
 
 local Lib = require(game:GetService("ReplicatedStorage").Framework.Library);
 local Save = Lib.Save.Get();
 local Pets = Save.Pets; 
 
+print("2")
 
 if Save.World ~= "Kawaii" then TeleportMod.Teleport("Kawaii Tokyo") end 
 repeat task.wait() until Lib.WorldCmds.HasLoaded() == true 
+
+print("3")
 
 local function GetAlleyChest()
     for Alley = 1,4 do 
@@ -79,6 +84,7 @@ local function FarmChest(Chest)
     until Library.Invoke("Get Coins")[tostring(Chest)] == nil
 end 
 
+print("5")
 while task.wait(1) do 
     if EggCheck() == false then 
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Workspace["__THINGS"].Coins[tostring(GetAlleyChest())].POS.CFrame
@@ -86,3 +92,4 @@ while task.wait(1) do
         FarmChest(GetAlleyChest())
     end 
 end 
+
