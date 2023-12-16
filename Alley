@@ -29,19 +29,6 @@ local Pets = Save.Pets;
 if Save.World ~= "Kawaii" then TeleportMod.Teleport("Kawaii Tokyo") end 
 repeat task.wait() until Lib.WorldCmds.HasLoaded() == true 
 
--- Auto Orb / Lootbag
-Workspace["__THINGS"].Orbs.ChildAdded:Connect(function(Child)
-    Library.Fire("Claim Orbs", {Child.Name})
-    Child:Destroy()
-    task.wait()
-end)
- 
-Workspace["__THINGS"].Lootbags.ChildAdded:Connect(function(Child)
-    Library.Fire("Collect Lootbag", Child.Name, Child.CFrame.p)
-    Child:Destroy()
-    task.wait()
-end)
-
 local function GetAlleyChest()
     for Alley = 1,4 do 
         for Order = 1,3 do 
