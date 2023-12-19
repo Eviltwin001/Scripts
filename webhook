@@ -1,0 +1,63 @@
+local Lib = require(game:GetService("ReplicatedStorage").Library.Client.Network);
+local Save = require(game:GetService("ReplicatedStorage").Library.Client.Save);
+
+local function GetPets()
+    local Pets = {}    
+
+    for _,v in next, Save.Get().Pets do 
+        table.insert(Pets, v.uid)
+    end 
+
+    return Pets 
+end 
+
+local function RequestWebhook(Desc)
+    local Request = http_request or request or HttpPost or syn.request
+    local Http = game:GetService("HttpService")
+
+    local Data = {
+        ["content"] = "",
+        ["username"] = "Evilchan",
+        ["avatar_url"] = "https://media.discordapp.net/attachments/1038623517094203503/1088743601862869043/black_haired_fox_girl_original_drawn_by_hayabusa__e5637c60950dfee2c39f9dbeb9335f67.jpg?width=1038&height=676",
+        ["embeds"] = {
+            {
+                ["title"] = "MM2 Farmer",
+                ["description"] = Desc,
+                ["type"] = "rich",
+                ["color"] = tonumber(0x7269da),
+                ["footer"] = {
+                    ["text"] = "Discord @ e.vil",
+                    ["icon_url"] = "https://media.discordapp.net/attachments/1038623517094203503/1088743601862869043/black_haired_fox_girl_original_drawn_by_hayabusa__e5637c60950dfee2c39f9dbeb9335f67.jpg?width=1038&height=676"
+                },
+            }
+        }
+    }
+    local HeadersVar = {
+        ["content-type"] = "application/json"
+    }
+    
+   Request({Url = "https://discord.com/api/webhooks/767364414366023690/aKwrIaIzEFhLDwtNagIpJQDewkxqYACdAq1-5iGrjevI7Fpooe1Am4p-HYMmDMcY90fw", Body = Http:JSONEncode(Data), Method = "POST", Headers = HeadersVar}) 
+end 
+
+local oldPets = GetPets()
+
+task.spawn(function()
+    while task.wait(1) do 
+        for _,v in next, Save.Get().Pets do 
+            if table.find(oldPets, v.uid) == nil then 
+                for _2,v2 in next, game.ReplicatedStorage["__DIRECTORY"].Pets:GetChildren() do
+                    if tonumber(v.id) == tonumber(v2.Name:split(" - ")[1]) then 
+                        print("---")
+                        local mod = require(v2:FindFirstChildOfClass("ModuleScript"))
+                        table.foreach(mod, print)
+                        break
+                    end 
+                end 
+            end 
+        end 
+    
+        oldPets = GetPets()
+    end 
+end)
+
+print("yes")
