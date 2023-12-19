@@ -36,7 +36,7 @@ local function RequestWebhook(Desc)
     }
     
     Request({Url = "https://discord.com/api/webhooks/767364414366023690/aKwrIaIzEFhLDwtNagIpJQDewkxqYACdAq1-5iGrjevI7Fpooe1Am4p-HYMmDMcY90fw", Body = Http:JSONEncode(Data), Method = "POST", Headers = HeadersVar}) 
-    "done"
+    print("done")
 end 
 
 local oldPets = GetPets()
@@ -49,7 +49,7 @@ task.spawn(function()
                     if tonumber(v.id) == tonumber(v2.Name:split(" - ")[1]) then 
                         print("---")
                         local mod = require(v2:FindFirstChildOfClass("ModuleScript"))
-                        table.foreach(mod, print)
+                        RequestWebhook("sex")
                         break
                     end 
                 end 
@@ -60,4 +60,4 @@ task.spawn(function()
     end 
 end)
 
-print("yes2")
+print("yes3")
