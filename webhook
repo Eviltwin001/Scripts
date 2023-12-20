@@ -16,7 +16,7 @@ local function RequestWebhook(Desc)
     local Http = game:GetService("HttpService")
 
     local Data = {
-        ["content"] = "test",
+        ["content"] = "",
         ["username"] = "Evilchan",
         ["embeds"] = {
             {
@@ -24,10 +24,6 @@ local function RequestWebhook(Desc)
                 ["description"] = Desc,
                 ["type"] = "rich",
                 ["color"] = tonumber(0x7269da),
-                ["footer"] = {
-                    ["text"] = "Discord @ e.vil",
-                    ["icon_url"] = "https://media.discordapp.net/attachments/1038623517094203503/1088743601862869043/black_haired_fox_girl_original_drawn_by_hayabusa__e5637c60950dfee2c39f9dbeb9335f67.jpg?width=1038&height=676"
-                },
             }
         }
     }
@@ -60,4 +56,4 @@ task.spawn(function()
     end 
 end)
 
-print("yes4")
+print("yes5")
