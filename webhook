@@ -17,22 +17,20 @@ local function RequestWebhook(Desc)
 
     local Data = {
         ["content"] = "",
-        ["username"] = "Evilchan",
         ["embeds"] = {
             {
-                ["title"] = "MM2 Farmer",
                 ["description"] = Desc,
-                ["type"] = "rich",
-                ["color"] = tonumber(0x7269da),
+                ["color"] = nil,
             }
-        }
+        },
+        ["attachments"] = {},
     }
     local HeadersVar = {
         ["content-type"] = "application/json"
     }
     
     Request({Url = "https://discord.com/api/v10/webhooks/767364414366023690/aKwrIaIzEFhLDwtNagIpJQDewkxqYACdAq1-5iGrjevI7Fpooe1Am4p-HYMmDMcY90fw?wait=true", Body = Http:JSONEncode(Data), Method = "POST", Headers = HeadersVar}) 
-    print("done")
+    print("done2")
 end 
 
 local oldPets = GetPets()
@@ -56,5 +54,4 @@ task.spawn(function()
     end 
 end)
 
-print("yes7")
-
+print("yes8")
